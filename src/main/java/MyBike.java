@@ -23,7 +23,7 @@ public interface MyBike {
      * @param idStation identifier of the station
      * @param description description
      * @param max maximum number of bikes of the station
-     * @param lat lattitude GPS
+     * @param lat latitude GPS
      * @param lon longitude GPS
      */
     public void addStation(String idStation, String description, int max, double lat, double lon);
