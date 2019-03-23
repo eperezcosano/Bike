@@ -3,7 +3,7 @@ import java.util.LinkedList;
 public class Station {
 
     //Attributes
-    private String id;
+    private String idStation;
     private String description;
     private int max;
     private double lat;
@@ -15,8 +15,8 @@ public class Station {
         this.bikes = new LinkedList<Bike>();
     }
 
-    public Station(String id, String description, int max, double lat, double lon) {
-        this.id = id;
+    public Station(String idStation, String description, int max, double lat, double lon) {
+        this.idStation = idStation;
         this.description = description;
         this.max = max;
         this.lat = lat;
@@ -25,12 +25,12 @@ public class Station {
     }
 
     //Getters and Setters
-    public String getId() {
-        return id;
+    public String getidStation() {
+        return idStation;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setidStation(String idStation) {
+        this.idStation = idStation;
     }
 
     public String getDescription() {
