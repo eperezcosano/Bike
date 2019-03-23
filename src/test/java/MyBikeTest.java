@@ -9,7 +9,7 @@ public class MyBikeTest {
     private MyBike mb;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws StationNotFoundException, StationFullException {
         this.mb = MyBikeImpl.getInstance();
         this.mb.addUser("user1", "Juan", "Lopex");
 
@@ -51,7 +51,7 @@ public class MyBikeTest {
     }
 
     @Test
-    public void testAddBike() throws Exception {
+    public void testAddBike() throws StationNotFoundException, StationFullException {
 
         this.mb.addBike("bike500", "descripton", 43.3, "Station1");
         this.mb.addBike("bike600", "descripton", 45.3, "Station1");
@@ -62,7 +62,7 @@ public class MyBikeTest {
     }
 
     @Test(expected = StationFullException.class)
-    public void testAddBikesAndStationFull() throws Exception {
+    public void testAddBikesAndStationFull() throws StationNotFoundException, StationFullException {
         this.mb.addStation("Station3","description", 2, 3, 3);
         Assert.assertEquals(3, this.mb.numStations());
         Assert.assertEquals(0, this.mb.numBikes("Station3"));
@@ -75,42 +75,42 @@ public class MyBikeTest {
 
 
     @Test(expected = StationNotFoundException.class)
-    public void testAddBikesAndStationNotFound() throws Exception {
+    public void testAddBikesAndStationNotFound() throws StationNotFoundException, StationFullException {
         this.mb.addBike("bike1", "descripton", 55.4,"StationXXXXX");
     }
 
 
 
     @Test
-    public void testBikesByStation() throws Exception {
+    public void testBikesByStation() throws StationNotFoundException {
 
         List<Bike> bikes = this.mb.bikesByStationOrderByKms("Station1");
 
-        Assert.assertEquals("bike103", bikes.get(0).getBikeId());
-        Assert.assertEquals(10, bikes.get(0).getKms(),1);
+        Assert.assertEquals("bike103", bikes.get(0).getId());
+        Assert.assertEquals(10, bikes.get(0).getKm(),1);
 
-        Assert.assertEquals("bike101", bikes.get(1).getBikeId());
-        Assert.assertEquals(25, bikes.get(1).getKms(),1);
+        Assert.assertEquals("bike101", bikes.get(1).getId());
+        Assert.assertEquals(25, bikes.get(1).getKm(),1);
 
-        Assert.assertEquals("bike102", bikes.get(2).getBikeId());
-        Assert.assertEquals(70, bikes.get(2).getKms(),1);
+        Assert.assertEquals("bike102", bikes.get(2).getId());
+        Assert.assertEquals(70, bikes.get(2).getKm(),1);
     }
 
     @Test
-    public void testGetBikes() throws Exception {
+    public void testGetBikes() throws StationNotFoundException, UserNotFoundException {
 
         Bike b1 = this.mb.getBike("Station1", "user1");
-        Assert.assertEquals("bike101", b1.getBikeId());
+        Assert.assertEquals("bike101", b1.getId());
         Assert.assertEquals(2, this.mb.numBikes("Station1"));
 
         Bike b2 = this.mb.getBike("Station2", "user1");
-        Assert.assertEquals("bike201", b2.getBikeId());
+        Assert.assertEquals("bike201", b2.getId());
         Assert.assertEquals(2, this.mb.numBikes("Station1"));
 
         List<Bike> bikes = this.mb.bikesByUser("user1");
 
-        Assert.assertEquals("bike101", bikes.get(0).getBikeId());
-        Assert.assertEquals("bike201", bikes.get(1).getBikeId());
+        Assert.assertEquals("bike101", bikes.get(0).getId());
+        Assert.assertEquals("bike201", bikes.get(1).getId());
 
     }
 
