@@ -1,3 +1,5 @@
+package edu.upc.eetac.dsa;
+
 import java.util.List;
 
 public interface MyBike {
@@ -8,7 +10,7 @@ public interface MyBike {
     public static final int S = 10;
 
     /**
-     * Add a new User
+     * Add a new edu.upc.eetac.dsa.User
      *
      * @param idUser identifier of the user
      * @param name name of the user
@@ -18,7 +20,7 @@ public interface MyBike {
 
 
     /**
-     * Add a new Station
+     * Add a new edu.upc.eetac.dsa.Station
      *
      * @param idStation identifier of the station
      * @param description description
@@ -30,7 +32,7 @@ public interface MyBike {
 
 
     /**
-     * Add a new Bike into a Station
+     * Add a new edu.upc.eetac.dsa.Bike into a edu.upc.eetac.dsa.Station
      *
      * @param idBike identifier of the bike
      * @param description description
@@ -52,7 +54,7 @@ public interface MyBike {
     public List<Bike> bikesByStationOrderByKms(String idStation) throws StationNotFoundException;
 
     /**
-     * get the first Bike of the station
+     * get the first edu.upc.eetac.dsa.Bike of the station
      *
      * @param stationId identifier of the station
      * @param userId identifier of the user

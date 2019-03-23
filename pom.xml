@@ -78,7 +78,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>Main</mainClass>
+                    <mainClass>dsa.upc.eetac.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,3 +1,5 @@
+package edu.upc.eetac.dsa;
+
 import org.apache.log4j.Logger;
 
 import java.util.*;
@@ -29,13 +31,13 @@ public class MyBikeImpl implements MyBike {
     public void addUser(String idUser, String name, String surname) {
         this.users.put(idUser, new User(idUser, name, surname));
         log.info(users.size());
-        log.info("User added:" + this.users.get(idUser));
+        log.info("edu.upc.eetac.dsa.User added:" + this.users.get(idUser));
     }
 
     public void addStation(String idStation, String description, int max, double lat, double lon) {
         if (numStations != S) {
             this.stations[this.numStations++] = new Station(idStation, description, max, lat, lon);
-            log.info("Station added: " + this.stations[numStations - 1]);
+            log.info("edu.upc.eetac.dsa.Station added: " + this.stations[numStations - 1]);
         } else {
             log.info("Maximum stations added");
         }
@@ -44,19 +46,19 @@ public class MyBikeImpl implements MyBike {
     public void addBike(String idBike, String description, double kms, String idStation) throws StationFullException, StationNotFoundException {
         Bike bike = new Bike(idBike, description, kms, idStation);
         int stationPos = this.getStationById(idStation);
-        log.info("Station found");
+        log.info("edu.upc.eetac.dsa.Station found");
         if (this.stations[stationPos].getBikes().size() < this.stations[stationPos].getMax()) {
             this.stations[stationPos].addBike(bike);
-            log.info("Bike added");
+            log.info("edu.upc.eetac.dsa.Bike added");
         } else {
-            log.info("Station full");
+            log.info("edu.upc.eetac.dsa.Station full");
             throw new StationFullException();
         }
     }
 
     public List<Bike> bikesByStationOrderByKms(String idStation) throws StationNotFoundException {
         int stationPos = this.getStationById(idStation);
-        log.info("Station found");
+        log.info("edu.upc.eetac.dsa.Station found");
         LinkedList<Bike> bikes = this.stations[stationPos].getBikes();
         log.info("List of bikes without order: " + bikes);
         Collections.sort(bikes, new Comparator<Bike>() {
@@ -70,7 +72,7 @@ public class MyBikeImpl implements MyBike {
 
     public Bike getBike(String stationId, String userId) throws UserNotFoundException, StationNotFoundException {
         int stationPos = this.getStationById(stationId);
-        log.info("Station found");
+        log.info("edu.upc.eetac.dsa.Station found");
         Bike bike = this.stations[stationPos].getBikes().removeFirst();
         User user = this.users.get(userId);
         if (user != null) {
@@ -78,7 +80,7 @@ public class MyBikeImpl implements MyBike {
             user.addBike(bike);
             return bike;
         } else {
-            log.info("User not found");
+            log.info("edu.upc.eetac.dsa.User not found");
             throw new UserNotFoundException();
         }
     }
@@ -90,7 +92,7 @@ public class MyBikeImpl implements MyBike {
             log.info("List of bikes of " + userId + ": " + bikes);
             return bikes;
         } else {
-            log.info("User not found");
+            log.info("edu.upc.eetac.dsa.User not found");
             throw new UserNotFoundException();
         }
     }
@@ -107,7 +109,7 @@ public class MyBikeImpl implements MyBike {
 
     public int numBikes(String idStation) throws StationNotFoundException {
         int stationPos = this.getStationById(idStation);
-        log.info("Station found");
+        log.info("edu.upc.eetac.dsa.Station found");
         log.info("Number of bikes: " + this.stations[stationPos].getBikes().size());
         return this.stations[stationPos].getBikes().size();
     }
@@ -123,7 +125,7 @@ public class MyBikeImpl implements MyBike {
         for (int i = 0; i < this.numStations; i++) {
             if (stationId.equals(this.stations[i].getidStation())) return i;
         }
-        log.info("Station not found");
+        log.info("edu.upc.eetac.dsa.Station not found");
         throw new StationNotFoundException();
     }
 }
