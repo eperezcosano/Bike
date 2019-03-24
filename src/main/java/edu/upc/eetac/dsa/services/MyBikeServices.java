@@ -13,8 +13,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Api(value = "/MyBike", description = "Endpoint to My Bike edu.upc.eetac.dsa.services")
-@Path("/MyBike")
+@Api(value = "/bike", description = "Endpoint to My Bike Service")
+@Path("/bike")
 public class MyBikeServices {
 
     private MyBike myBike;
@@ -37,19 +37,19 @@ public class MyBikeServices {
     }
 
     @GET
-    @ApiOperation(value = "get list of bikes ordered by km", notes = "X")
+    @ApiOperation(value = "get list of bikes ordered by km")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Bike.class, responseContainer="List"),
+            @ApiResponse(code = 200, message = "Successful", response = Bike.class, responseContainer="List"),
             @ApiResponse(code = 404, message = "Station not found")
     })
-    @Path("/1{idStation}")
+    @Path("/station/{idStation}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBikesOrderedByKm(@PathParam("idStation") String idStation) {
         List<Bike> bikes;
         try {
             bikes = this.myBike.bikesByStationOrderByKms(idStation);
             GenericEntity<List<Bike>> entity = new GenericEntity<List<Bike>>(bikes) {};
-            return Response.status(201).entity(entity).build();
+            return Response.status(200).entity(entity).build();
         } catch (StationNotFoundException e) {
             e.printStackTrace();
             return Response.status(404).build();
@@ -57,37 +57,34 @@ public class MyBikeServices {
     }
 
     @GET
-    @ApiOperation(value = "get list of bikes of a user", notes = "X")
+    @ApiOperation(value = "get list of bikes of a user")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Bike.class, responseContainer="List"),
+            @ApiResponse(code = 200, message = "Successful", response = Bike.class, responseContainer="List"),
             @ApiResponse(code = 404, message = "Station not found")
 
     })
-    @Path("/2{idUser}")
+    @Path("/user/{idUser}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response bikesByUser(@PathParam("idUser") String idUser) {
 
-        try{
-            List<Bike> bicis = this.myBike.bikesByUser(idUser);
-            GenericEntity<List<Bike>> entity = new GenericEntity<List<Bike>>(bicis) {};
-            return Response.status(201).entity(entity).build();
-        }
-        catch (UserNotFoundException e){
+        try {
+            List<Bike> bikes = this.myBike.bikesByUser(idUser);
+            GenericEntity<List<Bike>> entity = new GenericEntity<List<Bike>>(bikes) {};
+            return Response.status(200).entity(entity).build();
+        } catch (UserNotFoundException e) {
             e.printStackTrace();
             return Response.status(404).build();
         }
     }
 
     @GET
-    @ApiOperation(value = "get a bike", notes = "X")
+    @ApiOperation(value = "get a bike")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Bike.class, responseContainer="List"),
-            @ApiResponse(code = 404, message = "Station not found/User not found"),
-            @ApiResponse(code = 402, message = "StationNotFoundException")
-
-
+            @ApiResponse(code = 200, message = "Successful", response = Bike.class, responseContainer="List"),
+            @ApiResponse(code = 404, message = "StationNotFoundException"),
+            @ApiResponse(code = 406, message = "UserNotFoundException")
     })
-    @Path("/3{idStation}/{idUser}")
+    @Path("/station/{idStation}/user/{idUser}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response bikesByUser(@PathParam("idStation") String idStation, @PathParam("idUser") String idUser) {
 
@@ -95,22 +92,22 @@ public class MyBikeServices {
             Bike bike = this.myBike.getBike(idStation, idUser);
             GenericEntity<Bike> entity = new GenericEntity<Bike>(bike) {
             };
-            return Response.status(201).entity(entity).build();
+            return Response.status(200).entity(entity).build();
         } catch (StationNotFoundException e) {
             e.printStackTrace();
             return Response.status(404).build();
         } catch (UserNotFoundException e) {
             e.printStackTrace();
-            return Response.status(402).build();
+            return Response.status(406).build();
         }
     }
 
     @POST
-    @ApiOperation(value = "add user", notes = "X")
+    @ApiOperation(value = "add user")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful")
     })
-    @Path("/addUser")
+    @Path("/user")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addUser(User u) {
         String idUser = u.getIdUser();
@@ -121,11 +118,11 @@ public class MyBikeServices {
     }
 
     @POST
-    @ApiOperation(value = "add station", notes = "X")
+    @ApiOperation(value = "add station")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful")
     })
-    @Path("/addStation")
+    @Path("/station")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addStation(Station s) {
         String idStation = s.getidStation();
@@ -138,13 +135,13 @@ public class MyBikeServices {
     }
 
     @POST
-    @ApiOperation(value = "add bike", notes = "x")
+    @ApiOperation(value = "add bike")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "StationFullException"),
             @ApiResponse(code = 402, message = "StationNotFoundException")
     })
-    @Path("/addBike")
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addBike(Bike bike) {
         String idBike = bike.getId();
